@@ -1,14 +1,14 @@
 {
     "name": "foodflare-auth",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "A food-finder API authorizer designed for the FoodFlare app",
     "main": "index.js",
     "private": true,
     "scripts": {
-        "create": "claudia create --name foodflareAuth --version dev --region us-east-1 --handler index.authChecker --profile claudia",
-        "update": "claudia update --version dev --profile claudia",
-        "set-version": "claudia set-version --version prod --profile claudia",
-        "destroy": "claudia destroy --profile claudia",
+        "create": "claudia create --name foodflareAuth --version dev --region us-east-1 --handler index.authChecker --profile foodflare",
+        "update": "claudia update --version dev --profile foodflare",
+        "set-version": "claudia set-version --version prod --profile foodflare",
+        "destroy": "claudia destroy --profile foodflare",
         "test": "jasmine"
     },
     "repository": {

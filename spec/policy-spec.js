@@ -13,7 +13,6 @@ describe('Generate policy', () => {
    */
   describe('While generating policy', () => {
     let methodArn;
-    let errorMessage;
     let payload;
     let logged;
     let policy;
@@ -27,7 +26,6 @@ describe('Generate policy', () => {
     beforeEach(() => {
       console.log = jasmine.createSpy('log');
       methodArn = 'arn:aws:execute-api:us-east-1:123456789012:a1b2c3d4e5/dev/GET/some/path';
-      errorMessage = 'The payload is incorrectly formatted';
     });
 
     /**
@@ -41,13 +39,15 @@ describe('Generate policy', () => {
         type: 'app',
         ip: '1.1.1.1',
         ua: 'chrome',
+        iat: 99999,
+        exp: 99999,
       };
       logged = {
         payload,
         methodArn,
       };
       policy = {
-        principalId: '{"type":"app","ip":"1.1.1.1","ua":"chrome"}',
+        principalId: '{"type":"app","ip":"1.1.1.1","ua":"chrome","iat":99999,"exp":99999}',
         policyDocument: {
           Version: '2012-10-17',
           Statement: [{
@@ -68,67 +68,6 @@ describe('Generate policy', () => {
       // Assert.
       expect(console.log).toHaveBeenCalledWith('generatePolicy', logged);
       expect(result).toEqual(policy);
-    });
-
-    /**
-     * Thrown tests define.
-     *
-     * @since 1.0.0
-     */
-    const thrownTests = [
-      {
-        is: 'missing "type"',
-        payload: {
-          ip: '1.1.1.1',
-          ua: 'chrome',
-        },
-      },
-      {
-        is: 'missing "ip"',
-        payload: {
-          type: 'app',
-          ua: 'chrome',
-        },
-      },
-      {
-        is: 'missing "ua"',
-        payload: {
-          type: 'app',
-          ip: '1.1.1.1',
-        },
-      },
-      {
-        is: 'empty',
-        payload: {},
-      },
-    ];
-
-    /**
-     * Thrown tests for each.
-     *
-     * @since 1.0.0
-     */
-    thrownTests.forEach((thrownTest) => {
-      /**
-       * If in payload, is {thrownTest.is}, an error should be thrown.
-       *
-       * @since 1.0.0
-       */
-      it(`If in payload, is ${thrownTest.is}, an error should be thrown`, () => {
-        // Arrange.
-        payload = thrownTest.payload;
-        logged = {
-          payload,
-          methodArn,
-        };
-
-        // Act.
-        result = () => generatePolicy(payload, methodArn);
-
-        // Assert.
-        expect(result).toThrowError(SyntaxError, errorMessage);
-        expect(console.log).toHaveBeenCalledWith('generatePolicy', logged);
-      });
     });
   });
 });

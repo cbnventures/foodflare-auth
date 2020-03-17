@@ -66,11 +66,11 @@ To deploy the server, an IAM user with specified permissions is necessary. Follo
 1. Visit the [IAM Management Console](https://console.aws.amazon.com/iam/home?region=us-east-1)
 2. Under __Access management__, click __Users__
 3. Click the __Add user__ button
-   - For the user name, type in `claudia`
+   - For the user name, type in `foodflare`
    - Check __Programmatic access__ for the access type
 4. Click the __Next: Permissions__ button
 5. Click the __Create group__ button
-   - For the Group name, type in `claudia`
+   - For the group name, type in `foodflare`
    - Then search and enable these policies listed below:
      - `AWSLambdaFullAccess`
      - `IAMFullAccess`
@@ -83,7 +83,7 @@ To deploy the server, an IAM user with specified permissions is necessary. Follo
 
 On this page, you will be able to see the __Access key ID__ and __Secret access key__. Create a file called `credentials` with the keys copied into the content (shown below). Then save it under the `~/.aws` directory.
 ```
-[claudia]
+[foodflare]
 aws_access_key_id = THE_AWS_ACCESS_KEY_ID_HERE
 aws_secret_access_key = THE_AWS_SECRET_ACCESS_KEY_HERE
 ```

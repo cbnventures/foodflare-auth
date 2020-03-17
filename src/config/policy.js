@@ -1,5 +1,3 @@
-const _ = require('lodash');
-
 /**
  * Generate policy.
  *
@@ -11,8 +9,6 @@ const _ = require('lodash');
  * @since 1.0.0
  */
 function generatePolicy(payload, methodArn) {
-  const { type, ip, ua } = payload;
-
   const arn = methodArn.split(/[:/]/);
   const arnRegion = arn[3];
   const arnAccountId = arn[4];
@@ -23,15 +19,6 @@ function generatePolicy(payload, methodArn) {
     payload,
     methodArn,
   });
-
-  if (
-    _.isEmpty(payload)
-    || _.isEmpty(type)
-    || _.isEmpty(ip)
-    || _.isEmpty(ua)
-  ) {
-    throw new SyntaxError('The payload is incorrectly formatted');
-  }
 
   return {
     principalId: JSON.stringify(payload),

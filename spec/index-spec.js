@@ -45,7 +45,7 @@ describe('Authorization checker', () => {
         authorizationToken: 'Bearer Abc-1234_5678.Abc-1234_5678.Abc-1234_5678',
       };
       policy = {
-        principalId: '{"type":"app","ip":"1.1.1.1","ua":"chrome"}',
+        principalId: '{"type":"app","ip":"1.1.1.1","ua":"chrome","iat":99999,"exp":99999}',
         policyDocument: {
           Version: '2012-10-17',
           Statement: [{
@@ -64,6 +64,8 @@ describe('Authorization checker', () => {
         type: 'app',
         ip: '1.1.1.1',
         ua: 'chrome',
+        iat: 99999,
+        exp: 99999,
       });
 
       // Act.

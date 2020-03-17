@@ -3,7 +3,7 @@ const fs = require('fs');
 const jwt = require('jsonwebtoken');
 
 const { generatePolicy } = require('./src/config/policy');
-const { checkTokenFormat } = require('./src/lib/verification');
+const { checkTokenFormat, checkPayloadValidity } = require('./src/lib/verification');
 
 dotenv.config();
 
@@ -27,7 +27,8 @@ function authChecker(event, context, callback) {
       algorithms: [JWT_ALGORITHM],
       maxAge: JWT_MAX_AGE,
     });
-    const arnPolicy = generatePolicy(decodedBody, methodArn);
+    const cleanedPayload = checkPayloadValidity(decodedBody);
+    const arnPolicy = generatePolicy(cleanedPayload, methodArn);
 
     console.log('authChecker', event);
 
