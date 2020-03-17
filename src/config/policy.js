@@ -1,33 +1,40 @@
+const _ = require('lodash');
+
 /**
  * Generate policy.
  *
- * @param {Payload} thePayload - Decoded authorization token.
+ * @param {Payload} payload    - The payload.
  * @param {string}  methodArn  - Amazon Web Services resource name.
  *
  * @returns {PolicyResponse}
  *
  * @since 1.0.0
  */
-function generatePolicy(thePayload, methodArn) {
-  const { id, type } = thePayload;
+function generatePolicy(payload, methodArn) {
+  const { type, ip, ua } = payload;
 
-  const theArn    = methodArn.split(/[:/]/);
-  const region    = theArn[3];
-  const accountId = theArn[4];
-  const restApiId = theArn[5];
-  const stage     = theArn[6];
+  const arn = methodArn.split(/[:/]/);
+  const arnRegion = arn[3];
+  const arnAccountId = arn[4];
+  const arnRestApiId = arn[5];
+  const arnStage = arn[6];
 
   console.log('generatePolicy', {
-    thePayload,
+    payload,
     methodArn,
   });
 
-  if (typeof id !== 'number' || typeof type !== 'string') {
-    throw new SyntaxError('Decoded authorization token is incorrectly formatted');
+  if (
+    _.isEmpty(payload)
+    || _.isEmpty(type)
+    || _.isEmpty(ip)
+    || _.isEmpty(ua)
+  ) {
+    throw new SyntaxError('The payload is incorrectly formatted');
   }
 
   return {
-    principalId: `${type}-${id}`,
+    principalId: JSON.stringify(payload),
     policyDocument: {
       Version: '2012-10-17',
       Statement: [{
@@ -36,7 +43,7 @@ function generatePolicy(thePayload, methodArn) {
           'execute-api:Invoke',
         ],
         Resource: [
-          `arn:aws:execute-api:${region}:${accountId}:${restApiId}/${stage}/*`,
+          `arn:aws:execute-api:${arnRegion}:${arnAccountId}:${arnRestApiId}/${arnStage}/*`,
         ],
       }],
     },

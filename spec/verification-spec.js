@@ -23,7 +23,7 @@ describe('Check authorization token format', () => {
      * @since 1.0.0
      */
     beforeEach(() => {
-      console.log  = jasmine.createSpy('log');
+      console.log = jasmine.createSpy('log');
       errorMessage = 'Authentication token is incorrectly formatted';
     });
 
@@ -34,7 +34,7 @@ describe('Check authorization token format', () => {
      */
     it('If in token, correct format with Bearer, the token should be returned', () => {
       // Arrange.
-      authToken      = 'Bearer Abc-1234_5678.Abc-1234_5678.Abc-1234_5678';
+      authToken = 'Bearer Abc-1234_5678.Abc-1234_5678.Abc-1234_5678';
       expectedReturn = 'Abc-1234_5678.Abc-1234_5678.Abc-1234_5678';
 
       // Act.

@@ -27,9 +27,9 @@ describe('Authorization checker', () => {
      */
     beforeEach(() => {
       console.error = jasmine.createSpy('error');
-      console.log   = jasmine.createSpy('log');
+      console.log = jasmine.createSpy('log');
       lambdaContext = jasmine.createSpyObj('lambdaContext', ['done']);
-      callback      = jasmine.createSpy('callback').and.callFake((failed, success) => failed || success);
+      callback = jasmine.createSpy('callback').and.callFake((failed, success) => failed || success);
     });
 
     /**
@@ -44,8 +44,8 @@ describe('Authorization checker', () => {
         methodArn: 'arn:aws:execute-api:us-east-1:123456789012:a1b2c3d4e5/dev/GET/some/path',
         authorizationToken: 'Bearer Abc-1234_5678.Abc-1234_5678.Abc-1234_5678',
       };
-      policy    = {
-        principalId: 'something-99999',
+      policy = {
+        principalId: '{"type":"app","ip":"1.1.1.1","ua":"chrome"}',
         policyDocument: {
           Version: '2012-10-17',
           Statement: [{
@@ -61,8 +61,9 @@ describe('Authorization checker', () => {
       };
 
       spyOn(jwt, 'verify').and.returnValue({
-        id: 99999,
-        type: 'something',
+        type: 'app',
+        ip: '1.1.1.1',
+        ua: 'chrome',
       });
 
       // Act.

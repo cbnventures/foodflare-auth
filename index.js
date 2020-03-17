@@ -1,8 +1,8 @@
 const dotenv = require('dotenv');
-const fs     = require('fs');
-const jwt    = require('jsonwebtoken');
+const fs = require('fs');
+const jwt = require('jsonwebtoken');
 
-const { generatePolicy }   = require('./src/config/policy');
+const { generatePolicy } = require('./src/config/policy');
 const { checkTokenFormat } = require('./src/lib/verification');
 
 dotenv.config();
@@ -18,16 +18,16 @@ dotenv.config();
  */
 function authChecker(event, context, callback) {
   const { authorizationToken, methodArn } = event;
-  const { JWT_ALGORITHM, JWT_MAX_AGE }    = process.env;
+  const { JWT_ALGORITHM, JWT_MAX_AGE } = process.env;
 
   try {
     const cleanedAuth = checkTokenFormat(authorizationToken);
-    const publicKey   = fs.readFileSync(`${__dirname}/certs/public.pem`);
+    const publicKey = fs.readFileSync(`${__dirname}/certs/public.pem`);
     const decodedBody = jwt.verify(cleanedAuth, publicKey, {
       algorithms: [JWT_ALGORITHM],
       maxAge: JWT_MAX_AGE,
     });
-    const arnPolicy   = generatePolicy(decodedBody, methodArn);
+    const arnPolicy = generatePolicy(decodedBody, methodArn);
 
     console.log('authChecker', event);
 

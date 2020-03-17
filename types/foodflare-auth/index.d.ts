@@ -1,4 +1,4 @@
-// Type definitions for foodflare-auth 1.0.0
+// Type definitions for foodflare-auth 1.0.1
 // Project: https://github.com/cbnventures/foodflare-auth
 // Definitions by: Jacky Liang <https://github.com/mrjackyliang>
 // TypeScript Version: 3.7.5
@@ -18,8 +18,9 @@ type AuthCallback = (failed?: 'Unauthorized' | null, success?: PolicyResponse) =
 type PolicyResponse = AuthResponse;
 
 interface Payload {
-  id: number;
   type: 'web' | 'app';
+  ip: string;
+  ua: string;
   iat: number;
   exp: number;
 }

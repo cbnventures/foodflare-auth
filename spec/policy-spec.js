@@ -25,28 +25,29 @@ describe('Generate policy', () => {
      * @since 1.0.0
      */
     beforeEach(() => {
-      console.log  = jasmine.createSpy('log');
-      methodArn    = 'arn:aws:execute-api:us-east-1:123456789012:a1b2c3d4e5/dev/GET/some/path';
-      errorMessage = 'Decoded authorization token is incorrectly formatted';
+      console.log = jasmine.createSpy('log');
+      methodArn = 'arn:aws:execute-api:us-east-1:123456789012:a1b2c3d4e5/dev/GET/some/path';
+      errorMessage = 'The payload is incorrectly formatted';
     });
 
     /**
-     * If in payload, "id" is a number and "type" is a string, a policy should be returned.
+     * If in payload, is correct, a policy should be returned.
      *
      * @since 1.0.0
      */
-    it('If in payload, "id" is a number and "type" is a string, a policy should be returned', () => {
+    it('If in payload, is correct, a policy should be returned', () => {
       // Arrange.
       payload = {
-        id: 99999,
-        type: 'something',
+        type: 'app',
+        ip: '1.1.1.1',
+        ua: 'chrome',
       };
-      logged  = {
-        thePayload: payload,
+      logged = {
+        payload,
         methodArn,
       };
-      policy  = {
-        principalId: 'something-99999',
+      policy = {
+        principalId: '{"type":"app","ip":"1.1.1.1","ua":"chrome"}',
         policyDocument: {
           Version: '2012-10-17',
           Statement: [{
@@ -70,96 +71,64 @@ describe('Generate policy', () => {
     });
 
     /**
-     * If in payload, "id" is not a number and "type" is not a string, an error should be thrown.
+     * Thrown tests define.
      *
      * @since 1.0.0
      */
-    it('If in payload, "id" is not a number and "type" is not a string, an error should be thrown', () => {
-      // Arrange.
-      payload = {
-        id: '99999',
-        type: true,
-      };
-      logged  = {
-        thePayload: payload,
-        methodArn,
-      };
-
-      // Act.
-      result = () => generatePolicy(payload, methodArn);
-
-      // Assert.
-      expect(result).toThrowError(SyntaxError, errorMessage);
-      expect(console.log).toHaveBeenCalledWith('generatePolicy', logged);
-    });
+    const thrownTests = [
+      {
+        is: 'missing "type"',
+        payload: {
+          ip: '1.1.1.1',
+          ua: 'chrome',
+        },
+      },
+      {
+        is: 'missing "ip"',
+        payload: {
+          type: 'app',
+          ua: 'chrome',
+        },
+      },
+      {
+        is: 'missing "ua"',
+        payload: {
+          type: 'app',
+          ip: '1.1.1.1',
+        },
+      },
+      {
+        is: 'empty',
+        payload: {},
+      },
+    ];
 
     /**
-     * If in payload, "id" is not a number, an error should be thrown.
+     * Thrown tests for each.
      *
      * @since 1.0.0
      */
-    it('If in payload, "id" is not a number, an error should be thrown', () => {
-      // Arrange.
-      payload = {
-        id: '99999',
-        type: 'something',
-      };
-      logged  = {
-        thePayload: payload,
-        methodArn,
-      };
+    thrownTests.forEach((thrownTest) => {
+      /**
+       * If in payload, is {thrownTest.is}, an error should be thrown.
+       *
+       * @since 1.0.0
+       */
+      it(`If in payload, is ${thrownTest.is}, an error should be thrown`, () => {
+        // Arrange.
+        payload = thrownTest.payload;
+        logged = {
+          payload,
+          methodArn,
+        };
 
-      // Act.
-      result = () => generatePolicy(payload, methodArn);
+        // Act.
+        result = () => generatePolicy(payload, methodArn);
 
-      // Assert.
-      expect(result).toThrowError(SyntaxError, errorMessage);
-      expect(console.log).toHaveBeenCalledWith('generatePolicy', logged);
-    });
-
-    /**
-     * If in payload, "type" is not a string, an error should be thrown.
-     *
-     * @since 1.0.0
-     */
-    it('If in payload, "type" is not a string, an error should be thrown', () => {
-      // Arrange.
-      payload = {
-        id: 99999,
-        type: true,
-      };
-      logged  = {
-        thePayload: payload,
-        methodArn,
-      };
-
-      // Act.
-      result = () => generatePolicy(payload, methodArn);
-
-      // Assert.
-      expect(result).toThrowError(SyntaxError, errorMessage);
-      expect(console.log).toHaveBeenCalledWith('generatePolicy', logged);
-    });
-
-    /**
-     * If in payload, is empty, an error should be thrown.
-     *
-     * @since 1.0.0
-     */
-    it('If in payload, is empty, an error should be thrown', () => {
-      // Arrange.
-      payload = {};
-      logged  = {
-        thePayload: payload,
-        methodArn,
-      };
-
-      // Act.
-      result = () => generatePolicy(payload, methodArn);
-
-      // Assert.
-      expect(result).toThrowError(SyntaxError, errorMessage);
-      expect(console.log).toHaveBeenCalledWith('generatePolicy', logged);
+        // Assert.
+        expect(result).toThrowError(SyntaxError, errorMessage);
+        expect(console.log).toHaveBeenCalledWith('generatePolicy', logged);
+      });
     });
   });
 });
