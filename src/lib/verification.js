@@ -46,23 +46,23 @@ function checkPayloadIfValid(payload) {
   }
 
   if (_.isEmpty(type) || !_.isString(type)) {
-    throw new SyntaxError('The payload "type" key is empty or not a string');
+    throw new SyntaxError('The "type" key is empty or not a string');
   }
 
   if (_.isEmpty(ip) || !_.isString(ip)) {
-    throw new SyntaxError('The payload "ip" key is empty or not a string');
+    throw new SyntaxError('The "ip" key is empty or not a string');
   }
 
   if (_.isEmpty(ua) || !_.isString(ua)) {
-    throw new SyntaxError('The payload "ua" key is empty or not a string');
+    throw new SyntaxError('The "ua" key is empty or not a string');
   }
 
   if (!_.isNumber(iat)) {
-    throw new SyntaxError('The payload "iat" key is not a number');
+    throw new SyntaxError('The "iat" key is not a number');
   }
 
   if (!_.isNumber(exp)) {
-    throw new SyntaxError('The payload "exp" key is not a number');
+    throw new SyntaxError('The "exp" key is not a number');
   }
 
   return payload;

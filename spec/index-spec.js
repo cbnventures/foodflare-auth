@@ -191,7 +191,7 @@ describe('Auth checker', () => {
           iat: 99999,
           exp: 99999,
         },
-        errMsg: 'The payload "type" key is empty or not a string',
+        errMsg: 'The "type" key is empty or not a string',
       },
       {
         name: '"type" key is not a string',
@@ -202,7 +202,7 @@ describe('Auth checker', () => {
           iat: 99999,
           exp: 99999,
         },
-        errMsg: 'The payload "type" key is empty or not a string',
+        errMsg: 'The "type" key is empty or not a string',
       },
       {
         name: '"ip" key is undefined',
@@ -212,7 +212,7 @@ describe('Auth checker', () => {
           iat: 99999,
           exp: 99999,
         },
-        errMsg: 'The payload "ip" key is empty or not a string',
+        errMsg: 'The "ip" key is empty or not a string',
       },
       {
         name: '"ip" key is not a string',
@@ -223,7 +223,7 @@ describe('Auth checker', () => {
           iat: 99999,
           exp: 99999,
         },
-        errMsg: 'The payload "ip" key is empty or not a string',
+        errMsg: 'The "ip" key is empty or not a string',
       },
       {
         name: '"ua" key is undefined',
@@ -233,7 +233,7 @@ describe('Auth checker', () => {
           iat: 99999,
           exp: 99999,
         },
-        errMsg: 'The payload "ua" key is empty or not a string',
+        errMsg: 'The "ua" key is empty or not a string',
       },
       {
         name: '"ua" key is not a string',
@@ -244,7 +244,7 @@ describe('Auth checker', () => {
           iat: 99999,
           exp: 99999,
         },
-        errMsg: 'The payload "ua" key is empty or not a string',
+        errMsg: 'The "ua" key is empty or not a string',
       },
       {
         name: '"iat" key is not a number',
@@ -255,7 +255,7 @@ describe('Auth checker', () => {
           iat: true,
           exp: 99999,
         },
-        errMsg: 'The payload "iat" key is not a number',
+        errMsg: 'The "iat" key is not a number',
       },
       {
         name: '"exp" key is not a number',
@@ -266,7 +266,7 @@ describe('Auth checker', () => {
           iat: 99999,
           exp: true,
         },
-        errMsg: 'The payload "exp" key is not a number',
+        errMsg: 'The "exp" key is not a number',
       },
     ];
 
