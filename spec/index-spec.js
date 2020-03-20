@@ -176,10 +176,12 @@ describe('Auth checker', () => {
       {
         name: 'empty',
         payload: {},
+        errMsg: 'The payload is empty or invalid',
       },
       {
         name: 'not an object',
         payload: true,
+        errMsg: 'The payload is empty or invalid',
       },
       {
         name: '"type" key is undefined',
@@ -189,6 +191,7 @@ describe('Auth checker', () => {
           iat: 99999,
           exp: 99999,
         },
+        errMsg: 'The payload "type" key is empty or not a string',
       },
       {
         name: '"type" key is not a string',
@@ -199,6 +202,7 @@ describe('Auth checker', () => {
           iat: 99999,
           exp: 99999,
         },
+        errMsg: 'The payload "type" key is empty or not a string',
       },
       {
         name: '"ip" key is undefined',
@@ -208,6 +212,7 @@ describe('Auth checker', () => {
           iat: 99999,
           exp: 99999,
         },
+        errMsg: 'The payload "ip" key is empty or not a string',
       },
       {
         name: '"ip" key is not a string',
@@ -218,6 +223,7 @@ describe('Auth checker', () => {
           iat: 99999,
           exp: 99999,
         },
+        errMsg: 'The payload "ip" key is empty or not a string',
       },
       {
         name: '"ua" key is undefined',
@@ -227,6 +233,7 @@ describe('Auth checker', () => {
           iat: 99999,
           exp: 99999,
         },
+        errMsg: 'The payload "ua" key is empty or not a string',
       },
       {
         name: '"ua" key is not a string',
@@ -237,6 +244,7 @@ describe('Auth checker', () => {
           iat: 99999,
           exp: 99999,
         },
+        errMsg: 'The payload "ua" key is empty or not a string',
       },
       {
         name: '"iat" key is not a number',
@@ -247,6 +255,7 @@ describe('Auth checker', () => {
           iat: true,
           exp: 99999,
         },
+        errMsg: 'The payload "iat" key is not a number',
       },
       {
         name: '"exp" key is not a number',
@@ -257,6 +266,7 @@ describe('Auth checker', () => {
           iat: 99999,
           exp: true,
         },
+        errMsg: 'The payload "exp" key is not a number',
       },
     ];
 
@@ -274,7 +284,7 @@ describe('Auth checker', () => {
       it(`If payload is invalid (${wrongPayload.name}), an error should be thrown`, () => {
         // Arrange.
         payload = wrongPayload.payload;
-        errorObject = new SyntaxError('The payload is empty or invalid');
+        errorObject = new SyntaxError(wrongPayload.errMsg);
 
         spyOn(jwt, 'verify').and.returnValue(payload);
 
