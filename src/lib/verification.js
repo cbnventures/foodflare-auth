@@ -22,6 +22,25 @@ function checkTokenFormat(authToken) {
 }
 
 /**
+ * Check payload if empty.
+ *
+ * @param {Payload} payload - The payload.
+ *
+ * @returns {Payload}
+ *
+ * @since 1.0.0
+ */
+function checkPayloadIfEmpty(payload) {
+  console.log('checkPayloadIfEmpty', payload);
+
+  if (_.isEmpty(payload) || !_.isObject(payload)) {
+    throw new SyntaxError('The payload is empty or invalid');
+  }
+
+  return payload;
+}
+
+/**
  * Check payload if valid.
  *
  * @param {Payload} payload - The payload.
@@ -40,10 +59,6 @@ function checkPayloadIfValid(payload) {
   } = payload;
 
   console.log('checkPayloadIfValid', payload);
-
-  if (_.isEmpty(payload) || !_.isObject(payload)) {
-    throw new SyntaxError('The payload is empty or invalid');
-  }
 
   if (_.isEmpty(type) || !_.isString(type)) {
     throw new SyntaxError('The "type" key is empty or not a string');
@@ -69,4 +84,5 @@ function checkPayloadIfValid(payload) {
 }
 
 exports.checkTokenFormat = checkTokenFormat;
+exports.checkPayloadIfEmpty = checkPayloadIfEmpty;
 exports.checkPayloadIfValid = checkPayloadIfValid;

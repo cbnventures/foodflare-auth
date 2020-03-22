@@ -89,10 +89,11 @@ describe('Auth checker', () => {
 
       // Assert.
       expect(console.log).toHaveBeenCalledWith('checkTokenFormat', authToken);
+      expect(console.log).toHaveBeenCalledWith('checkPayloadIfEmpty', payload);
       expect(console.log).toHaveBeenCalledWith('checkPayloadIfValid', payload);
       expect(console.log).toHaveBeenCalledWith('generatePolicy', logUserAuth);
       expect(console.log).toHaveBeenCalledWith('authChecker', authEvent);
-      expect(console.log).toHaveBeenCalledTimes(4);
+      expect(console.log).toHaveBeenCalledTimes(5);
       expect(console.error).not.toHaveBeenCalled();
       expect(callback.calls.first().returnValue).toEqual(policy);
       expect(result).toBeUndefined();
@@ -177,11 +178,13 @@ describe('Auth checker', () => {
         name: 'empty',
         payload: {},
         errMsg: 'The payload is empty or invalid',
+        empty: true,
       },
       {
         name: 'not an object',
         payload: true,
         errMsg: 'The payload is empty or invalid',
+        empty: true,
       },
       {
         name: '"type" key is undefined',
@@ -192,6 +195,7 @@ describe('Auth checker', () => {
           exp: 99999,
         },
         errMsg: 'The "type" key is empty or not a string',
+        empty: false,
       },
       {
         name: '"type" key is not a string',
@@ -203,6 +207,7 @@ describe('Auth checker', () => {
           exp: 99999,
         },
         errMsg: 'The "type" key is empty or not a string',
+        empty: false,
       },
       {
         name: '"ip" key is undefined',
@@ -213,6 +218,7 @@ describe('Auth checker', () => {
           exp: 99999,
         },
         errMsg: 'The "ip" key is empty or not a string',
+        empty: false,
       },
       {
         name: '"ip" key is not a string',
@@ -224,6 +230,7 @@ describe('Auth checker', () => {
           exp: 99999,
         },
         errMsg: 'The "ip" key is empty or not a string',
+        empty: false,
       },
       {
         name: '"ua" key is undefined',
@@ -234,6 +241,7 @@ describe('Auth checker', () => {
           exp: 99999,
         },
         errMsg: 'The "ua" key is empty or not a string',
+        empty: false,
       },
       {
         name: '"ua" key is not a string',
@@ -245,6 +253,7 @@ describe('Auth checker', () => {
           exp: 99999,
         },
         errMsg: 'The "ua" key is empty or not a string',
+        empty: false,
       },
       {
         name: '"iat" key is not a number',
@@ -256,6 +265,7 @@ describe('Auth checker', () => {
           exp: 99999,
         },
         errMsg: 'The "iat" key is not a number',
+        empty: false,
       },
       {
         name: '"exp" key is not a number',
@@ -267,6 +277,7 @@ describe('Auth checker', () => {
           exp: true,
         },
         errMsg: 'The "exp" key is not a number',
+        empty: false,
       },
     ];
 
@@ -293,8 +304,15 @@ describe('Auth checker', () => {
 
         // Assert.
         expect(console.log).toHaveBeenCalledWith('checkTokenFormat', authEvent.authorizationToken);
-        expect(console.log).toHaveBeenCalledWith('checkPayloadIfValid', payload);
-        expect(console.log).toHaveBeenCalledTimes(2);
+        expect(console.log).toHaveBeenCalledWith('checkPayloadIfEmpty', payload);
+
+        if (wrongPayload.empty) {
+          expect(console.log).toHaveBeenCalledTimes(2);
+        } else {
+          expect(console.log).toHaveBeenCalledWith('checkPayloadIfValid', payload);
+          expect(console.log).toHaveBeenCalledTimes(3);
+        }
+
         expect(console.error).toHaveBeenCalledWith('authChecker', errorObject);
         expect(console.error).toHaveBeenCalledTimes(1);
         expect(callback.calls.first().returnValue).toEqual('Unauthorized');

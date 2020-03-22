@@ -1,6 +1,6 @@
 {
     "name": "foodflare-auth",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "A food-finder API authorizer designed for the FoodFlare app",
     "main": "index.js",
     "private": true,
