@@ -44,5 +44,5 @@ modules.xml
 
 ### Project Excludes ###
 .env
-.pem
+public.pem
 claudia.json
