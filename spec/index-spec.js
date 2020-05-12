@@ -36,7 +36,7 @@ describe('Auth checker', () => {
 
     // Payload.
     payload = {
-      type: 'app',
+      type: 'something',
       ip: '1.1.1.1',
       ua: 'chrome',
       iat: 99999,
@@ -55,11 +55,11 @@ describe('Auth checker', () => {
     let policy;
 
     /**
-     * If token and payload is correct, a policy should be returned.
+     * If token and payload is valid, a policy should be returned.
      *
      * @since 1.0.0
      */
-    it('If token and payload is correct, a policy should be returned', () => {
+    it('If token and payload is valid, a policy should be returned', () => {
       // Arrange.
       authToken = authEvent.authorizationToken;
       logUserAuth = {
@@ -67,7 +67,7 @@ describe('Auth checker', () => {
         methodArn: authEvent.methodArn,
       };
       policy = {
-        principalId: '{"type":"app","ip":"1.1.1.1","ua":"chrome","iat":99999,"exp":99999}',
+        principalId: '{"type":"something","ip":"1.1.1.1","ua":"chrome","iat":99999,"exp":99999}',
         policyDocument: {
           Version: '2012-10-17',
           Statement: [{
@@ -95,33 +95,33 @@ describe('Auth checker', () => {
       expect(console.log).toHaveBeenCalledWith('authChecker', authEvent);
       expect(console.log).toHaveBeenCalledTimes(5);
       expect(console.error).not.toHaveBeenCalled();
-      expect(callback.calls.first().returnValue).toEqual(policy);
+      expect(callback).toHaveBeenCalledWith(null, policy);
       expect(result).toBeUndefined();
     });
   });
 
   /**
-   * Checks for wrong token format.
+   * Checks for invalid token format.
    *
    * @since 1.0.0
    */
-  describe('Checks for wrong token format', () => {
+  describe('Checks for invalid token format', () => {
     /**
      * Define tests.
      *
      * @since 1.0.0
      */
-    const wrongTokens = [
+    const invalidTokens = [
       {
-        name: 'wrong format, no Bearer',
+        name: 'invalid format, no Bearer',
         token: 'Abc-1234_5678+=.Abc-1234_5678+=.Abc-1234_5678+=',
       },
       {
-        name: 'wrong format, with Bearer',
+        name: 'invalid format, with Bearer',
         token: 'Bearer Abc-1234_5678+=.Abc-1234_5678+=.Abc-1234_5678+=',
       },
       {
-        name: 'correct format, no Bearer',
+        name: 'valid format, no Bearer',
         token: 'Abc-1234_5678.Abc-1234_5678.Abc-1234_5678',
       },
       {
@@ -135,15 +135,15 @@ describe('Auth checker', () => {
      *
      * @since 1.0.0
      */
-    wrongTokens.forEach((wrongToken) => {
+    invalidTokens.forEach((invalidToken) => {
       /**
-       * If token is invalid (${wrongToken.name}), an error should be thrown.
+       * If token is invalid (${invalidToken.name}), an error should be thrown.
        *
        * @since 1.0.0
        */
-      it(`If token is invalid (${wrongToken.name}), an error should be thrown`, () => {
+      it(`If token is invalid (${invalidToken.name}), an error should be thrown`, () => {
         // Arrange.
-        authEvent.authorizationToken = wrongToken.token;
+        authEvent.authorizationToken = invalidToken.token;
         errorObject = new SyntaxError('Authentication token is incorrectly formatted');
 
         spyOn(jwt, 'verify').and.returnValue(payload);
@@ -156,7 +156,7 @@ describe('Auth checker', () => {
         expect(console.log).toHaveBeenCalledTimes(1);
         expect(console.error).toHaveBeenCalledWith('authChecker', errorObject);
         expect(console.error).toHaveBeenCalledTimes(1);
-        expect(callback.calls.first().returnValue).toEqual('Unauthorized');
+        expect(callback).toHaveBeenCalledWith('Unauthorized');
         expect(result).toBeUndefined();
       });
     });
@@ -173,7 +173,7 @@ describe('Auth checker', () => {
      *
      * @since 1.0.0
      */
-    const wrongPayloads = [
+    const invalidPayloads = [
       {
         name: 'empty',
         payload: {},
@@ -212,7 +212,7 @@ describe('Auth checker', () => {
       {
         name: '"ip" key is undefined',
         payload: {
-          type: 'app',
+          type: 'something',
           ua: 'chrome',
           iat: 99999,
           exp: 99999,
@@ -223,7 +223,7 @@ describe('Auth checker', () => {
       {
         name: '"ip" key is not a string',
         payload: {
-          type: 'app',
+          type: 'something',
           ip: true,
           ua: 'chrome',
           iat: 99999,
@@ -235,7 +235,7 @@ describe('Auth checker', () => {
       {
         name: '"ua" key is undefined',
         payload: {
-          type: 'app',
+          type: 'something',
           ip: '1.1.1.1',
           iat: 99999,
           exp: 99999,
@@ -246,7 +246,7 @@ describe('Auth checker', () => {
       {
         name: '"ua" key is not a string',
         payload: {
-          type: 'app',
+          type: 'something',
           ip: '1.1.1.1',
           ua: true,
           iat: 99999,
@@ -258,7 +258,7 @@ describe('Auth checker', () => {
       {
         name: '"iat" key is not a number',
         payload: {
-          type: 'app',
+          type: 'something',
           ip: '1.1.1.1',
           ua: 'chrome',
           iat: true,
@@ -270,7 +270,7 @@ describe('Auth checker', () => {
       {
         name: '"exp" key is not a number',
         payload: {
-          type: 'app',
+          type: 'something',
           ip: '1.1.1.1',
           ua: 'chrome',
           iat: 99999,
@@ -286,16 +286,16 @@ describe('Auth checker', () => {
      *
      * @since 1.0.0
      */
-    wrongPayloads.forEach((wrongPayload) => {
+    invalidPayloads.forEach((invalidPayload) => {
       /**
-       * If payload is invalid (${wrongPayload.name}), an error should be thrown.
+       * If payload is invalid (${invalidPayload.name}), an error should be thrown.
        *
        * @since 1.0.0
        */
-      it(`If payload is invalid (${wrongPayload.name}), an error should be thrown`, () => {
+      it(`If payload is invalid (${invalidPayload.name}), an error should be thrown`, () => {
         // Arrange.
-        payload = wrongPayload.payload;
-        errorObject = new SyntaxError(wrongPayload.errMsg);
+        payload = invalidPayload.payload;
+        errorObject = new SyntaxError(invalidPayload.errMsg);
 
         spyOn(jwt, 'verify').and.returnValue(payload);
 
@@ -306,7 +306,7 @@ describe('Auth checker', () => {
         expect(console.log).toHaveBeenCalledWith('checkTokenFormat', authEvent.authorizationToken);
         expect(console.log).toHaveBeenCalledWith('checkPayloadIfEmpty', payload);
 
-        if (wrongPayload.empty) {
+        if (invalidPayload.empty) {
           expect(console.log).toHaveBeenCalledTimes(2);
         } else {
           expect(console.log).toHaveBeenCalledWith('checkPayloadIfValid', payload);
@@ -315,7 +315,7 @@ describe('Auth checker', () => {
 
         expect(console.error).toHaveBeenCalledWith('authChecker', errorObject);
         expect(console.error).toHaveBeenCalledTimes(1);
-        expect(callback.calls.first().returnValue).toEqual('Unauthorized');
+        expect(callback).toHaveBeenCalledWith('Unauthorized');
         expect(result).toBeUndefined();
       });
     });

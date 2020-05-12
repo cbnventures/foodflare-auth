@@ -1,6 +1,7 @@
 {
     "name": "foodflare-auth",
-    "version": "1.0.7",
+    "displayName": "FoodFlare Auth",
+    "version": "1.0.8",
     "description": "A food-finder API authorizer designed for the FoodFlare app",
     "main": "index.js",
     "private": true,
@@ -48,16 +49,16 @@
         "lodash": "^4.17.15"
     },
     "devDependencies": {
-        "@types/aws-lambda": "^8.10.44",
-        "@types/node": "^13.7.4",
-        "@typescript-eslint/eslint-plugin": "^2.20.0",
-        "@typescript-eslint/parser": "^2.20.0",
-        "aws-lambda": "^1.0.5",
+        "@types/aws-lambda": "^8.10.51",
+        "@types/node": "^13.13.5",
+        "@typescript-eslint/eslint-plugin": "^2.32.0",
+        "@typescript-eslint/parser": "^2.32.0",
+        "aws-lambda": "^1.0.6",
         "claudia": "^5.12.0",
         "eslint": "^6.8.0",
-        "eslint-config-airbnb-base": "^14.0.0",
-        "eslint-plugin-import": "^2.20.1",
-        "eslint-plugin-jasmine": "^4.1.0",
+        "eslint-config-airbnb-base": "^14.1.0",
+        "eslint-plugin-import": "^2.20.2",
+        "eslint-plugin-jasmine": "^4.1.1",
         "jasmine": "^3.5.0",
         "typescript": "^3.8.2"
     }
