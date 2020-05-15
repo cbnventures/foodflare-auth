@@ -1,7 +1,7 @@
-// Type definitions for foodflare-auth 1.0.7
+// Type definitions for foodflare-auth 1.0.9
 // Project: https://github.com/cbnventures/foodflare-auth
 // Definitions by: Jacky Liang <https://github.com/mrjackyliang>
-// TypeScript Version: 3.7.5
+// TypeScript Version: 3.8.2
 
 import { Context, AuthResponse } from 'aws-lambda';
 
