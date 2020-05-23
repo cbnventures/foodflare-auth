@@ -54,10 +54,10 @@ cp .env.sample .env
 
 Once the `.env` file is initialized, modify the variables according to the specification below:
 
-| __Variable__    | __Specification__                                                                                                                                                                 | __Accepted Values__                                                                  |
-|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
-| `JWT_ALGORITHM` | The algorithm JWT uses to read your public key. For example, if you generated an __ES256__ key pair in the previous step, you would type in `ES256`.                              | `RS256`, `RS384`, `RS512`, `ES256`, `ES384`, `ES512`, `PS256`, `PS384`, and `PS512`. |
-| `JWT_MAX_AGE`   | The maximum allowed age for tokens to still be valid. For example, if a token is set to expire in `15s` and the max-age is set to `30s`, then JWT will accept tokens up to `30s`. | Interpreted with the [zeit/ms](https://github.com/zeit/ms) library.                  |
+| __Variable__    | __Specification__                                                                                                                                                                 | __Accepted Values__                                                                                                |
+|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
+| `JWT_ALGORITHM` | The algorithm JWT uses to read your public key. For example, if you generated an __ES256__ key pair in the previous step, you would type in `ES256`.                              | `RS256`, `RS384`, `RS512`, `ES256`, `ES384`, `ES512`, `PS256`, `PS384`, and `PS512`.                               |
+| `JWT_MAX_AGE`   | The maximum allowed age for tokens to still be valid. For example, if a token is set to expire in `15s` and the max-age is set to `30s`, then JWT will accept tokens up to `30s`. | A string describing a time span. The string is interpreted with the [zeit/ms](https://github.com/zeit/ms) library. |
 
 __NOTE:__ Please be advised, choices you make here may affect the choices for the [next set of instructions](https://github.com/cbnventures/foodflare-api#instructions-part-2-of-4). If you do decide to change it later, don't forget to make the changes here too.
 
@@ -89,9 +89,9 @@ aws_secret_access_key = THE_AWS_SECRET_ACCESS_KEY_HERE
 ```
 
 ### 5. Deploy to Lambda
-When the above steps are finalized (and you're ready), run these commands to deploy the server on to Lambda:
+When the above steps have been completed, run this command to deploy the server on to Amazon Web Services:
 ```sh
-npm run create && npm run set-version
+npm run create
 ```
 
-__NOTE:__ The `create` command will upload your project into the development stage. Once the development version is working for you, the `set-version` will push the working copy into production.
+__NOTE:__ The `create` command will upload your project into the `dev` and `prod` stages. While under development, use the `update:dev` command to update the development version. When ready for production, run `update:prod`.

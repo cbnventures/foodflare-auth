@@ -1,14 +1,17 @@
 {
     "name": "foodflare-auth",
     "displayName": "FoodFlare Auth",
-    "version": "1.0.9",
-    "description": "A food-finder API authorizer designed for the FoodFlare app",
+    "version": "1.0.10",
+    "description": "A food-finder API gateway authorizer designed for the FoodFlare app",
     "main": "index.js",
     "private": true,
     "scripts": {
-        "create": "claudia create --name foodflareAuth --version dev --region us-east-1 --handler index.authChecker --profile foodflare",
-        "update": "claudia update --version dev --profile foodflare",
-        "set-version": "claudia set-version --version prod --profile foodflare",
+        "create": "npm run create:dev && npm run create:prod",
+        "create:dev": "claudia create --name foodflareAuth --version dev --region us-east-1 --handler index.authChecker --profile foodflare",
+        "create:prod": "claudia set-version --version prod --profile foodflare",
+        "update": "npm run update:dev && npm run update:prod",
+        "update:dev": "claudia update --version dev --profile foodflare",
+        "update:prod": "claudia update --version prod --profile foodflare",
         "destroy": "claudia destroy --profile foodflare",
         "test": "jasmine"
     },
@@ -50,9 +53,9 @@
     },
     "devDependencies": {
         "@types/aws-lambda": "^8.10.51",
-        "@types/node": "^13.13.5",
-        "@typescript-eslint/eslint-plugin": "^2.32.0",
-        "@typescript-eslint/parser": "^2.32.0",
+        "@types/node": "^13.13.9",
+        "@typescript-eslint/eslint-plugin": "^2.34.0",
+        "@typescript-eslint/parser": "^2.34.0",
         "aws-lambda": "^1.0.6",
         "claudia": "^5.12.0",
         "eslint": "^6.8.0",
@@ -60,6 +63,6 @@
         "eslint-plugin-import": "^2.20.2",
         "eslint-plugin-jasmine": "^4.1.1",
         "jasmine": "^3.5.0",
-        "typescript": "^3.8.2"
+        "typescript": "^3.9.3"
     }
 }

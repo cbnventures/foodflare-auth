@@ -70,15 +70,17 @@ describe('Auth checker', () => {
         principalId: '{"type":"something","ip":"1.1.1.1","ua":"chrome","iat":99999,"exp":99999}',
         policyDocument: {
           Version: '2012-10-17',
-          Statement: [{
-            Effect: 'Allow',
-            Action: [
-              'execute-api:Invoke',
-            ],
-            Resource: [
-              'arn:aws:execute-api:us-east-1:123456789012:a1b2c3d4e5/dev/*',
-            ],
-          }],
+          Statement: [
+            {
+              Effect: 'Allow',
+              Action: [
+                'execute-api:Invoke',
+              ],
+              Resource: [
+                'arn:aws:execute-api:us-east-1:123456789012:a1b2c3d4e5/dev/*',
+              ],
+            },
+          ],
         },
       };
 
