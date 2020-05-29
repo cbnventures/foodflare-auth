@@ -28,7 +28,8 @@
         "food",
         "api",
         "claudia",
-        "aws"
+        "aws",
+        "lambda"
     ],
     "author": "CBN Ventures LLC",
     "license": "ISC",
