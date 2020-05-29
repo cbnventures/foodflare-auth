@@ -33,7 +33,7 @@ function checkTokenFormat(authToken) {
 function checkPayloadIfEmpty(payload) {
   console.log('checkPayloadIfEmpty', payload);
 
-  if (_.isEmpty(payload) || !_.isObject(payload)) {
+  if (_.isEmpty(payload) || !_.isPlainObject(payload)) {
     throw new SyntaxError('The payload is empty or invalid');
   }
 
@@ -72,17 +72,19 @@ function checkPayloadIfValid(payload) {
     throw new SyntaxError('The "ua" key is empty or not a string');
   }
 
-  if (!_.isNumber(iat)) {
+  if (_.isNaN(iat) || !_.isNumber(iat)) {
     throw new SyntaxError('The "iat" key is not a number');
   }
 
-  if (!_.isNumber(exp)) {
+  if (_.isNaN(exp) || !_.isNumber(exp)) {
     throw new SyntaxError('The "exp" key is not a number');
   }
 
   return payload;
 }
 
-exports.checkTokenFormat = checkTokenFormat;
-exports.checkPayloadIfEmpty = checkPayloadIfEmpty;
-exports.checkPayloadIfValid = checkPayloadIfValid;
+module.exports = {
+  checkTokenFormat,
+  checkPayloadIfEmpty,
+  checkPayloadIfValid,
+};

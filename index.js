@@ -10,9 +10,9 @@ dotenv.config();
 /**
  * Authorization checker.
  *
- * @param {AuthEvent}    event    - API Gateway custom authorizer event.
- * @param {AuthContext}  context  - Amazon Web Services Lambda context object.
- * @param {AuthCallback} callback - Callback function.
+ * @param {AuthEvent}   event    - API Gateway custom authorizer event.
+ * @param {AuthContext} context  - Amazon Web Services Lambda context object.
+ * @param {Function}    callback - Callback function.
  *
  * @since 1.0.0
  */
@@ -41,4 +41,6 @@ function authChecker(event, context, callback) {
   }
 }
 
-exports.authChecker = authChecker;
+module.exports = {
+  authChecker,
+};

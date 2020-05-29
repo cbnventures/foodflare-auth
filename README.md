@@ -26,16 +26,17 @@ With FoodFlare re-designed from the bottom up, we've decided to split the old v2
 ## Instructions (Part 1 of 4)
 To keep things going, we will assume that you are running the [latest version of Node.js](https://nodejs.org/en/download/) and have the respective accounts set up and ready to go.
 
-### 1. Setup and Install Node Modules
-To start, let's make sure the globally installed packages are updated, and project dependencies installed. If you are using an IDE (Integrated Developer Environment), you may set up types and run the included tests.
+### 1. Update and Install Node Modules
+To start, update and install the globally installed packages and project dependencies. If you are using an IDE (Integrated Developer Environment), you may set up types and run the included tests.
+
 ```sh
 sudo npm update -g && npm install
 ```
 
-### 2. Generate Cryptographic Certificates
-To combat extraneous API requests, the project uses a library called [JSON Web Tokens](https://jwt.io). JWT allows the API to grant users temporary access and optionally includes the requestor's information.
+### 2. Generate Certificates
+To combat extraneous API requests, the project uses a library called [JSON Web Tokens](https://jwt.io). JWT allows the API to grant users temporary access and includes the requester's information.
 
-To maximize security, the project is designed to support _only asymmetric algorithms_, in which, a public/private key pair is required to generate a signature for the token.
+To maximize security, _only asymmetric algorithms_ are currently supported, in which, one of the requirements is a generated public/private key pair.
 
 __For your convenience, use the commands below to quickly create a signature pair.__
 
@@ -46,23 +47,25 @@ __For your convenience, use the commands below to quickly create a signature pai
 
 __Pick a signature, generate the private key, then the public key.__ Once you have both keys, re-locate the `public.pem` file into the `certs` directory, then keep the `private.pem` file for the [next set of instructions](https://github.com/cbnventures/foodflare-api#instructions-part-2-of-4).
 
-### 3. Environment Variables
+### 3. Configure Environment Variables
 This project includes some configuration to help you configure how you want FoodFlare to run. Don't forget to initialize the `.env` file with this command:
+
 ```sh
 cp .env.sample .env
 ```
 
-Once the `.env` file is initialized, modify the variables according to the specification below:
+Once you initialize the `.env` file, modify the variables according to the specification below:
 
-| __Variable__    | __Specification__                                                                                                                                                                 | __Accepted Values__                                                                                                |
-|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
-| `JWT_ALGORITHM` | The algorithm JWT uses to read your public key. For example, if you generated an __ES256__ key pair in the previous step, you would type in `ES256`.                              | `RS256`, `RS384`, `RS512`, `ES256`, `ES384`, `ES512`, `PS256`, `PS384`, and `PS512`.                               |
-| `JWT_MAX_AGE`   | The maximum allowed age for tokens to still be valid. For example, if a token is set to expire in `15s` and the max-age is set to `30s`, then JWT will accept tokens up to `30s`. | A string describing a time span. The string is interpreted with the [zeit/ms](https://github.com/zeit/ms) library. |
+| __Variable__    | __Specification__                                                                                                                                                                     | __Accepted Values__                                                                                                |
+|-----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
+| `JWT_ALGORITHM` | The algorithm JWT uses to read your public key. For example, if you generated an __ES256__ key pair in the previous step, you would type in `ES256`.                                  | `RS256`, `RS384`, `RS512`, `ES256`, `ES384`, `ES512`, `PS256`, `PS384`, and `PS512`.                               |
+| `JWT_MAX_AGE`   | The maximum allowed age for JWT tokens to still be valid. For example, if a token is set to expire in `15s` and the max-age is set to `30s`, then JWT will accept tokens up to `30s`. | A string describing a time span. The string is interpreted with the [zeit/ms](https://github.com/zeit/ms) library. |
 
 __NOTE:__ Please be advised, choices you make here may affect the choices for the [next set of instructions](https://github.com/cbnventures/foodflare-api#instructions-part-2-of-4). If you do decide to change it later, don't forget to make the changes here too.
 
-### 4. Setup IAM Credentials
+### 4. Setup IAM User
 To deploy the server, an IAM user with specified permissions is necessary. Follow the instructions below to create a new user:
+
 1. Visit the [IAM Management Console](https://console.aws.amazon.com/iam/home?region=us-east-1)
 2. Under __Access management__, click __Users__
 3. Click the __Add user__ button
@@ -90,6 +93,7 @@ aws_secret_access_key = THE_AWS_SECRET_ACCESS_KEY_HERE
 
 ### 5. Deploy to Lambda
 When the above steps have been completed, run this command to deploy the server on to Amazon Web Services:
+
 ```sh
 npm run create
 ```

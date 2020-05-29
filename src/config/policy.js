@@ -39,4 +39,6 @@ function generatePolicy(payload, methodArn) {
   };
 }
 
-exports.generatePolicy = generatePolicy;
+module.exports = {
+  generatePolicy,
+};

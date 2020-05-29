@@ -1,9 +1,9 @@
-// Type definitions for foodflare-auth 1.0.10
+// Type definitions for foodflare-auth 1.0.11
 // Project: https://github.com/cbnventures/foodflare-auth
 // Definitions by: Jacky Liang <https://github.com/mrjackyliang>
 // TypeScript Version: 3.9.3
 
-import { Context, PolicyDocument } from 'aws-lambda';
+import { Context } from 'aws-lambda';
 
 interface AuthEvent {
   type: 'REQUEST' | 'TOKEN' | 'COGNITO_USER_POOLS';
@@ -12,8 +12,6 @@ interface AuthEvent {
 }
 
 type AuthContext = Context;
-
-type AuthCallback = (failed?: 'Unauthorized' | null, success?: PolicyDocument) => void;
 
 interface Payload {
   type: 'web' | 'app';
