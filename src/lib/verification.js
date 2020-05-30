@@ -72,12 +72,12 @@ function checkPayloadIfValid(payload) {
     throw new SyntaxError('The "ua" key is empty or not a string');
   }
 
-  if (_.isNaN(iat) || !_.isNumber(iat)) {
-    throw new SyntaxError('The "iat" key is not a number');
+  if (!_.isFinite(iat)) {
+    throw new SyntaxError('The "iat" key is not a finite number');
   }
 
-  if (_.isNaN(exp) || !_.isNumber(exp)) {
-    throw new SyntaxError('The "exp" key is not a number');
+  if (!_.isFinite(exp)) {
+    throw new SyntaxError('The "exp" key is not a finite number');
   }
 
   return payload;

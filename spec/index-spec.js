@@ -177,14 +177,36 @@ describe('Auth checker', () => {
      */
     const invalidPayloads = [
       {
-        name: 'empty',
+        name: 'payload is undefined',
+        payload: undefined,
+        errMsg: 'The payload is empty or invalid',
+        empty: true,
+      },
+      {
+        name: 'payload is boolean',
+        payload: true,
+        errMsg: 'The payload is empty or invalid',
+        empty: true,
+      },
+      {
+        name: 'payload is an empty object',
         payload: {},
         errMsg: 'The payload is empty or invalid',
         empty: true,
       },
       {
-        name: 'not an object',
-        payload: true,
+        name: 'payload is an empty array',
+        payload: [],
+        errMsg: 'The payload is empty or invalid',
+        empty: true,
+      },
+      {
+        name: 'payload is a filled array',
+        payload: [
+          {
+            hello: 'world',
+          },
+        ],
         errMsg: 'The payload is empty or invalid',
         empty: true,
       },
@@ -200,9 +222,21 @@ describe('Auth checker', () => {
         empty: false,
       },
       {
-        name: '"type" key is not a string',
+        name: '"type" key is boolean',
         payload: {
           type: true,
+          ip: '1.1.1.1',
+          ua: 'chrome',
+          iat: 99999,
+          exp: 99999,
+        },
+        errMsg: 'The "type" key is empty or not a string',
+        empty: false,
+      },
+      {
+        name: '"type" key is an empty string',
+        payload: {
+          type: '',
           ip: '1.1.1.1',
           ua: 'chrome',
           iat: 99999,
@@ -223,10 +257,22 @@ describe('Auth checker', () => {
         empty: false,
       },
       {
-        name: '"ip" key is not a string',
+        name: '"ip" key is boolean',
         payload: {
           type: 'something',
           ip: true,
+          ua: 'chrome',
+          iat: 99999,
+          exp: 99999,
+        },
+        errMsg: 'The "ip" key is empty or not a string',
+        empty: false,
+      },
+      {
+        name: '"ip" key is an empty string',
+        payload: {
+          type: 'something',
+          ip: '',
           ua: 'chrome',
           iat: 99999,
           exp: 99999,
@@ -246,7 +292,7 @@ describe('Auth checker', () => {
         empty: false,
       },
       {
-        name: '"ua" key is not a string',
+        name: '"ua" key is boolean',
         payload: {
           type: 'something',
           ip: '1.1.1.1',
@@ -258,27 +304,109 @@ describe('Auth checker', () => {
         empty: false,
       },
       {
-        name: '"iat" key is not a number',
+        name: '"ua" key is an empty string',
+        payload: {
+          type: 'something',
+          ip: '1.1.1.1',
+          ua: '',
+          iat: 99999,
+          exp: 99999,
+        },
+        errMsg: 'The "ua" key is empty or not a string',
+        empty: false,
+      },
+      {
+        name: '"iat" key is undefined',
         payload: {
           type: 'something',
           ip: '1.1.1.1',
           ua: 'chrome',
-          iat: true,
           exp: 99999,
         },
-        errMsg: 'The "iat" key is not a number',
+        errMsg: 'The "iat" key is not a finite number',
         empty: false,
       },
       {
-        name: '"exp" key is not a number',
+        name: '"iat" key is NaN',
+        payload: {
+          type: 'something',
+          ip: '1.1.1.1',
+          ua: 'chrome',
+          iat: NaN,
+          exp: 99999,
+        },
+        errMsg: 'The "iat" key is not a finite number',
+        empty: false,
+      },
+      {
+        name: '"iat" key is Infinity',
+        payload: {
+          type: 'something',
+          ip: '1.1.1.1',
+          ua: 'chrome',
+          iat: Infinity,
+          exp: 99999,
+        },
+        errMsg: 'The "iat" key is not a finite number',
+        empty: false,
+      },
+      {
+        name: '"iat" key is -Infinity',
+        payload: {
+          type: 'something',
+          ip: '1.1.1.1',
+          ua: 'chrome',
+          iat: -Infinity,
+          exp: 99999,
+        },
+        errMsg: 'The "iat" key is not a finite number',
+        empty: false,
+      },
+      {
+        name: '"exp" key is undefined',
         payload: {
           type: 'something',
           ip: '1.1.1.1',
           ua: 'chrome',
           iat: 99999,
-          exp: true,
         },
-        errMsg: 'The "exp" key is not a number',
+        errMsg: 'The "exp" key is not a finite number',
+        empty: false,
+      },
+      {
+        name: '"exp" key is NaN',
+        payload: {
+          type: 'something',
+          ip: '1.1.1.1',
+          ua: 'chrome',
+          iat: 99999,
+          exp: NaN,
+        },
+        errMsg: 'The "exp" key is not a finite number',
+        empty: false,
+      },
+      {
+        name: '"exp" key is Infinity',
+        payload: {
+          type: 'something',
+          ip: '1.1.1.1',
+          ua: 'chrome',
+          iat: 99999,
+          exp: Infinity,
+        },
+        errMsg: 'The "exp" key is not a finite number',
+        empty: false,
+      },
+      {
+        name: '"exp" key is -Infinity',
+        payload: {
+          type: 'something',
+          ip: '1.1.1.1',
+          ua: 'chrome',
+          iat: 99999,
+          exp: -Infinity,
+        },
+        errMsg: 'The "exp" key is not a finite number',
         empty: false,
       },
     ];
