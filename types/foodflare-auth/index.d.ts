@@ -1,4 +1,4 @@
-// Type definitions for foodflare-auth 1.0.12
+// Type definitions for foodflare-auth 1.0.13
 // Project: https://github.com/cbnventures/foodflare-auth
 // Definitions by: Jacky Liang <https://github.com/mrjackyliang>
 // TypeScript Version: 3.9.3
