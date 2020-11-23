@@ -1,8 +1,8 @@
 /**
  * Generate policy.
  *
- * @param {Payload} payload    - The payload.
- * @param {string}  methodArn  - Amazon Web Services resource name.
+ * @param {Payload} payload   - The payload.
+ * @param {string}  methodArn - Amazon Web Services resource name.
  *
  * @returns {PolicyDocument} An authorizer response.
  *

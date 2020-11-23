@@ -1,21 +1,21 @@
-// Type definitions for foodflare-auth 1.0.13
+// Type definitions for foodflare-auth 1.0.14
 // Project: https://github.com/cbnventures/foodflare-auth
 // Definitions by: Jacky Liang <https://github.com/mrjackyliang>
-// TypeScript Version: 3.9.3
+// TypeScript Version: 3.9.7
 
 import { Context, PolicyDocument } from 'aws-lambda';
 
-interface AuthEvent {
+export interface AuthEvent {
   type: 'REQUEST' | 'TOKEN' | 'COGNITO_USER_POOLS';
   methodArn: string;
   authorizationToken: string;
 }
 
-type AuthContext = Context;
+export type AuthContext = Context;
 
-type AuthCallback = (failed?: 'Unauthorized' | null, success?: PolicyDocument) => void;
+export type AuthCallback = (failed?: 'Unauthorized' | null, success?: PolicyDocument) => void;
 
-interface Payload {
+export interface Payload {
   type: 'web' | 'app';
   ip: string;
   ua: string;
