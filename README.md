@@ -4,9 +4,9 @@ FoodFlare - API Auth Server
 [![GitHub Releases](https://img.shields.io/github/v/release/cbnventures/foodflare-auth?style=flat-square&color=blue&sort=semver)](https://github.com/cbnventures/foodflare-auth/releases)
 [![GitHub Top Languages](https://img.shields.io/github/languages/top/cbnventures/foodflare-auth?style=flat-square&color=success)](https://github.com/cbnventures/foodflare-auth)
 [![GitHub License](https://img.shields.io/github/license/cbnventures/foodflare-auth?style=flat-square&color=yellow)](https://github.com/cbnventures/foodflare-auth/blob/master/LICENSE)
-[![Donate via PayPal](https://img.shields.io/badge/donate-paypal-blue?style=flat-square&color=orange)](https://www.paypal.me/cbnventures)
+[![Donate via PayPal](https://img.shields.io/badge/donate-paypal-blue?style=flat-square&color=orange)](https://cbnventures.io/paypal)
 
-With so many restaurants, coffee shops, and dessert places, choosing one quickly turns into a huge responsibility. Through FoodFlare, these problems go away _fast_. Whether you're hungry or dying to visit a _newly open and hidden in the corner_ kind of coffee shop, this app is for you.
+With so many restaurants, coffee shops, and dessert places, choosing one quickly turns into a huge responsibility. Through FoodFlare, these problems go away _fast_. Whether you're hungry or dying to visit a _newly open and hidden in the corner_ kind of shop, this app is for you.
 
 __Not looking to develop FoodFlare? Download it now on the [App Store](https://itunes.apple.com/us/app/foodflare/id1398042619?ls=1&mt=8) and [Google Play](https://play.google.com/store/apps/details?id=io.cbnventures.foodflare).__
 
@@ -98,4 +98,4 @@ When the above steps have been completed, run this command to deploy the server 
 npm run create
 ```
 
-__NOTE:__ The `create` command will upload your project into the `dev` and `prod` stages. While under development, use the `update:dev` command to update the development version. When ready for production, run `update:prod`.
+__NOTE:__ The `create` command will upload your project into the `dev` and `prod` stages. While under development, use the `update:dev` command to update the development version and `update:prod` for production.
