@@ -51,7 +51,7 @@ function checkPayloadIfEmpty(payload) {
  */
 function checkPayloadIfValid(payload) {
   const {
-    type,
+    platform,
     ip,
     ua,
     iat,
@@ -60,24 +60,24 @@ function checkPayloadIfValid(payload) {
 
   console.log('checkPayloadIfValid', payload);
 
-  if (_.isEmpty(type) || !_.isString(type)) {
-    throw new SyntaxError('The "type" key is empty or not a string');
+  if (_.isEmpty(platform) || !_.isString(platform)) {
+    throw new SyntaxError('The "platform" value is empty or not a string');
   }
 
   if (_.isEmpty(ip) || !_.isString(ip)) {
-    throw new SyntaxError('The "ip" key is empty or not a string');
+    throw new SyntaxError('The "ip" value is empty or not a string');
   }
 
   if (_.isEmpty(ua) || !_.isString(ua)) {
-    throw new SyntaxError('The "ua" key is empty or not a string');
+    throw new SyntaxError('The "ua" value is empty or not a string');
   }
 
   if (!_.isFinite(iat)) {
-    throw new SyntaxError('The "iat" key is not a finite number');
+    throw new SyntaxError('The "iat" value is not a finite number');
   }
 
   if (!_.isFinite(exp)) {
-    throw new SyntaxError('The "exp" key is not a finite number');
+    throw new SyntaxError('The "exp" value is not a finite number');
   }
 
   return payload;

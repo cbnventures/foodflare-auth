@@ -1,4 +1,4 @@
-// Type definitions for foodflare-auth 1.0.14
+// Type definitions for foodflare-auth 1.0.15
 // Project: https://github.com/cbnventures/foodflare-auth
 // Definitions by: Jacky Liang <https://github.com/mrjackyliang>
 // TypeScript Version: 3.9.7
@@ -16,7 +16,7 @@ export type AuthContext = Context;
 export type AuthCallback = (failed?: 'Unauthorized' | null, success?: PolicyDocument) => void;
 
 export interface Payload {
-  type: 'web' | 'app';
+  platform: 'web' | 'mobile';
   ip: string;
   ua: string;
   iat: number;
