@@ -21,7 +21,7 @@ With FoodFlare re-designed from the bottom up, we've decided to split the old v2
 1. API Auth Server
 2. [API Server](https://github.com/cbnventures/foodflare-api)
 3. [iOS and Android App](https://github.com/cbnventures/foodflare-app)
-4. [Web Application](https://github.com/cbnventures/foodflare-web)
+4. [Web Preview](https://github.com/cbnventures/foodflare-web)
 
 ## Instructions (Part 1 of 4)
 To keep things going, we will assume that you are running the [latest version of Node.js](https://nodejs.org/en/download/) and have the respective accounts set up and ready to go.
@@ -78,6 +78,8 @@ To deploy the server, an IAM user with specified permissions is necessary. Follo
      - `AWSLambdaFullAccess`
      - `IAMFullAccess`
      - `AmazonAPIGatewayAdministrator`
+     - `AdministratorAccess-Amplify`
+     - `AdministratorAccess`
 6. Once done, click the __Create group__ button
 7. Click these buttons to skip through the setup:
     - __Next: Tags__
